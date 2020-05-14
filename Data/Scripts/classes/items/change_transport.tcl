@@ -32,6 +32,22 @@ $end
 
 $start
 $after
+def_class Schubkarren wood transport 1 {} {
+
+$put
+
+	method use {user} {
+		call_method this recycle $user
+	}
+	method recycle {user} {
+		tasklist_add $user "recycle [get_ref this]"
+	}
+
+$end
+
+
+$start
+$after
 def_class Hoverboard metal tool 2 {} {
 
 $put

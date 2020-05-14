@@ -9,13 +9,3 @@ $put
 		}
 
 $end
-
-$start
-$before
-
-		set_selectable this 0
-		set_hoverable this 0
-$put
-		set_boxed this 0
-
-$end
