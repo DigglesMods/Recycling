@@ -1,0 +1,18 @@
+{
+	"version" : "0.1",
+	"author" : "cech12",
+	
+	"name" :  {
+		"en" : "Recycling",
+		"de" : "Recycling"
+	},
+	"description" : {
+		"en" : "Recycle items or buildings with Alt-Click.",
+		"de" : "Recycle Items und Gebäude mit Alt-Klick."
+	},
+	
+	"links" : {
+		"download" : "https://github.com/DigglesMods/Recycling/releases",
+		"wiki" : "https://github.com/DigglesMods/Recycling/wiki"
+	}
+}
