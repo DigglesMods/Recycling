@@ -73,7 +73,12 @@ proc recycle_intern {item_ref} {
 				set_instore $item 0
 				set_prodalloclock $item 0
 				set_lock $item 0
-				set_pos $item [get_pos this]
+				if {[get_objclass $item] == "Schatzbuch"} {
+					call_method $item initiate [get_pos this]
+				} else {
+					set_posbottom $item [vector_fix [get_pos this]]
+				}
+				from_wall $item
 			}
 		}
 		
