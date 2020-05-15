@@ -28,8 +28,8 @@
 				"de" : "Wahrscheinlichkeit"
 			},
 			"description" : {
-				"en" : "Chance for any material of being recycled",
-				"de" : "Wahrscheinlichkeit (0 - 100%) für jedes Material recycelt zu werden"
+				"en" : "Chance (0-100%) for any material of being recycled",
+				"de" : "Wahrscheinlichkeit (0-100%) für jedes Material recycelt zu werden"
 			}
 		},
 		{
