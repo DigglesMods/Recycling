@@ -50,12 +50,8 @@ proc recycle_intern {item_ref} {
 		set whitelist [concat $whitelist [call_method $item_ref recycle_whitelist]]
 	}
 	
-	//material which should be replaced by another material
-	set replacements {
-		{Eisen Eisenerz}
-		{Gold Golderz}
-		{Kristall Krisallerz}
-	}
+	//materials which should be replaced by other materials. Format: {{Eisen Eisenerz} {Gold Golderz} ...}
+	set replacements {}
 	//get item specific material replacements
 	if {[check_method [get_objclass $item_ref] recycle_replacements]} {
 		set replacements [concat $replacements [call_method $item_ref recycle_replacements]]
@@ -87,7 +83,7 @@ proc recycle_intern {item_ref} {
 		//drop materials
 		foreach item_class $materials {
 			//get a material when whitelisted or (when not blacklisted with a chance) 
-			if {[lsearch $whitelist $item_class] > -1 || ([lsearch $blacklist $item_class] == -1 && [random 100] < 75)} {
+			if {[lsearch $whitelist $item_class] > -1 || ([lsearch $blacklist $item_class] == -1 && [random 100] < $print:CHANCE)} {
 				set replace_class $item_class
 				//replace item class when defined
 				foreach replacement $replacements {
@@ -113,3 +109,19 @@ proc recycle_intern {item_ref} {
 
 
 $end
+
+
+$if:INGOTS_TO_ORE
+
+$start
+$replace
+	set replacements {}
+$with
+	set replacements {
+		{Eisen Eisenerz}
+		{Gold Golderz}
+		{Kristall Krisallerz}
+	}
+$end
+
+$ifend

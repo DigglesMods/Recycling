@@ -14,5 +14,36 @@
 	"links" : {
 		"download" : "https://github.com/DigglesMods/Recycling/releases",
 		"wiki" : "https://github.com/DigglesMods/Recycling/wiki"
-	}
+	},
+	
+	"settings" : [
+		{
+			"id": "CHANCE",
+			"type": "int",
+			"default": 75,
+			"min": 0,
+			"max": 100,
+			"name" :  {
+				"en" : "Chance",
+				"de" : "Wahrscheinlichkeit"
+			},
+			"description" : {
+				"en" : "Chance for any material of being recycled",
+				"de" : "Wahrscheinlichkeit (0 - 100%) für jedes Material recycelt zu werden"
+			}
+		},
+		{
+			"id" : "INGOTS_TO_ORE",
+			"type" : "bool",
+			"default" : true,
+			"name" :  {
+				"en" : "Ingot to ore",
+				"de" : "Barren zu Erz"
+			},
+			"description" : {
+				"en" : "Replaces iron, gold and crystal when recycled with its ore variants",
+				"de" : "Ersetzt Eisen, Gold und Kristall beim Recyceln mit ihren Erz-Varianten"
+			}
+		}
+	]
 }
