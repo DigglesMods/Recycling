@@ -57,11 +57,6 @@ $put
 		
 		//change hat
 		prod_change_muetze metal
-		
-		//go to item and pick it up when not already in inventory
-		if {[inv_find_obj this $evtitem] < 0} {
-			pickup $evtitem
-		}
 
 		//recycle it
 		tasklist_add this "recycle $evtitem"

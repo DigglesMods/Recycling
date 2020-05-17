@@ -16,19 +16,45 @@ proc get_materials {item_ref} {
 //should be called by the recycle method of an item (which should be called by the use method of this item!)
 proc recycle {item_ref} {
 	if {![obj_valid $item_ref]} {
-		return 0
-	}
-	if {[inv_find_obj this $item_ref] == -1} {
+		tasklist_add this "rotate_tofront"
+		tasklist_add this "play_anim dontknow"
 		return 0
 	}
 	
 	//do animated recycling
-	tasklist_add this "rotate_tofront"
 	if {[get_materials $item_ref] != {}} {
+		//dust particles
+		change_particlesource this 5 19 {0 0 0.5} {0.5 0 0.5} 48 2 0 2
+		set_particlesource this 5 0
+		//chip particles
+		change_particlesource this 6 26 {0 0 0.5} {0 0 0} 32 1 0 2
+		set_particlesource this 6 0
+
+		//when stored in storage - pickup
+		if {[get_instore $item_ref]} {
+			pickup_from_store $item_ref
+		}
+		//drop item when in inventory
+		if {[inv_find_obj this $item_ref] != -1 || [get_instore $item_ref]} {
+			tasklist_add this "play_anim [putdown_anim]"
+			tasklist_add this "beamto_world $item_ref [random 6.282]"
+		}
+		
+		tasklist_add this "walk_near_item $item_ref 0.6 0.2"
+		tasklist_add this "rotate_towards $item_ref"
+		
+		tasklist_add this "set_particlesource this 5 1"
+		tasklist_add this "set_particlesource this 6 1"
 		tasklist_add this "play_anim workatfloor"
+		tasklist_add this "set_particlesource this 6 0"
+		tasklist_add this "set_particlesource this 5 0"
+		tasklist_add this "free_particlesource this 5"
+		tasklist_add this "free_particlesource this 6"
+		
 		tasklist_add this "recycle_intern $item_ref"
 		return 1
 	} else {
+		tasklist_add this "rotate_tofront"
 		tasklist_add this "play_anim dontknow"
 		return 0
 	}
@@ -36,6 +62,11 @@ proc recycle {item_ref} {
 
 //should only be called by tasklist
 proc recycle_intern {item_ref} {
+	if {![obj_valid $item_ref] || [is_contained $item_ref] || [get_lock $item_ref]} {
+		play_anim dontknow
+		return 0
+	}
+
 	//materials which cannot be recycled
 	set blacklist {Hamster Kohle}
 	//get item specific blacklisted materials
@@ -63,6 +94,7 @@ proc recycle_intern {item_ref} {
 	//do recycling
 	set items_generated 0
 	if {$materials != {}} {
+		set position [get_pos $item_ref]
 		//remove all items from item inventory (Storage or something similar)
 		catch {
 			foreach item [inv_list $item_ref] {
@@ -74,15 +106,17 @@ proc recycle_intern {item_ref} {
 				set_prodalloclock $item 0
 				set_lock $item 0
 				if {[get_objclass $item] == "Schatzbuch"} {
-					call_method $item initiate [get_pos this]
+					call_method $item initiate $position
 				} else {
-					set_posbottom $item [vector_fix [get_pos this]]
+					set_posbottom $item [vector_fix $position]
 				}
 				from_wall $item
 			}
 		}
 		
 		//delete item
+		set_hoverable $item_ref 0
+		set_visibility $item_ref 0
 		del $item_ref
 		
 		//drop materials
@@ -97,8 +131,8 @@ proc recycle_intern {item_ref} {
 					}
 				}
 				set obj [new $replace_class]
-				set_pos $obj [get_pos this]
-				set_owner $obj [get_owner this]
+				set_pos $obj $position
+				set_owner $obj $position
 				set_roty $obj [random 6.282]
 				incr items_generated
 			}
