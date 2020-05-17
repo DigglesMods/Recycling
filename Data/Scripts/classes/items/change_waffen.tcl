@@ -4,9 +4,6 @@ def_class Steinschleuder wood tool 1 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -20,9 +17,6 @@ def_class PfeilUndBogen wood tool 1 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -36,9 +30,6 @@ def_class Schild wood tool 1 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -52,9 +43,6 @@ def_class Schwert metal tool 1 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -68,9 +56,6 @@ def_class Metallschild metal tool 2 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -84,9 +69,6 @@ def_class Buechse metal tool 3 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -100,9 +82,6 @@ def_class Lichtschwert energy tool 4 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -116,9 +95,6 @@ def_class Kristallschild metal tool 4 {} {
 
 $put
 
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -139,9 +115,6 @@ def_class Keule metal tool 0 {} {
 	class_viewinfog 1
 	method is_weapon {} {}
 	method destroy {} { del this }
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}
@@ -159,9 +132,6 @@ def_class Streitaxt metal tool 0 {} {
 	class_viewinfog 1
 	method is_weapon {} {}
 	method destroy {} { del this }
-	method use {user} {
-		call_method this recycle $user
-	}
 	method recycle {user} {
 		tasklist_add $user "recycle [get_ref this]"
 	}

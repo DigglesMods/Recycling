@@ -45,5 +45,17 @@
 				"de" : "Ersetzt Eisen, Gold und Kristall beim Recyceln mit ihren Erz-Varianten"
 			}
 		}
+	],
+	
+	
+	"directories" : [
+		{
+			"type" : "data",
+			"path" : "Data_HD",
+			"condition" : {
+				"type" : "mod",
+				"id" : "DigglesHDmod"
+			}
+		}
 	]
 }
