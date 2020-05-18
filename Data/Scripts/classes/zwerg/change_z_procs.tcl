@@ -68,7 +68,7 @@ proc recycle_intern {item_ref} {
 	}
 
 	//materials which cannot be recycled
-	set blacklist {Hamster Kohle}
+	set blacklist {Hamster Kohle Zipfelmuetze}
 	//get item specific blacklisted materials
 	if {[check_method [get_objclass $item_ref] recycle_blacklist]} {
 		set blacklist [concat $blacklist [call_method $item_ref recycle_blacklist]]
