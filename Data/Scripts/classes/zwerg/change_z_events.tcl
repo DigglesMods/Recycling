@@ -5,6 +5,7 @@ $before
 $put
 
 	def_event evt_task_recycle
+	def_event evt_task_recyclebuilding
 
 $end
 
@@ -19,6 +20,9 @@ $put
 	handle_event evt_task_recycle {
 		evt_task_recycle_proc
 	}
+	handle_event evt_task_recyclebuilding {
+		evt_task_recyclebuilding_proc
+	}
 
 $end
 
@@ -27,7 +31,7 @@ $before
 
 	// Benutzten von Items
 $put
-	proc evt_task_recycle_proc {} {
+	proc recycle_preparation {} {
 		global event_log
 		global last_event event_repeat last_userevent_time
 
@@ -37,7 +41,7 @@ $put
 
 		set evtitem [event_get this -subject1]
 		if {[obj_valid $evtitem] == 0} {
-			return
+			return -1
 		}
 
 		//remove all tasks
@@ -57,9 +61,24 @@ $put
 		
 		//change hat
 		prod_change_muetze metal
+		
+		return $evtitem
+	}
 
-		//recycle it
-		tasklist_add this "recycle $evtitem"
+	proc evt_task_recycle_proc {} {
+		set evtitem [recycle_preparation]
+		if {$evtitem >= 0} {
+			//recycle it
+			tasklist_add this "call_method $evtitem recycle [get_ref this]"
+		}
+	}
+	proc evt_task_recyclebuilding_proc {} {
+		set evtitem [recycle_preparation]
+		if {$evtitem >= 0} {
+			//recycle it
+			tasklist_add this "call_method $evtitem recycle_building [get_ref this]"
+			log "after task"
+		}
 	}
 
 

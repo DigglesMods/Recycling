@@ -14,8 +14,14 @@ proc get_materials {item_ref} {
 
 //dwarf recycles the given item if a crafting recipe is defined in techtree
 //should be called by the recycle method of an item (which should be called by the use method of this item!)
-proc recycle {item_ref} {
-	if {![obj_valid $item_ref]} {
+proc recycle {item_ref {stored_dummy -2}} {
+	log "[get_objname this]: recycle [get_objclass $item_ref]_$item_ref"
+	if {$stored_dummy < 0} {
+		set stored_dummy $item_ref
+	}
+
+	if {![obj_valid $item_ref] || ![obj_valid $stored_dummy]} {
+		log "[get_objname this]: invalid recycle object"
 		tasklist_add this "rotate_tofront"
 		tasklist_add this "play_anim dontknow"
 		return 0
@@ -31,11 +37,11 @@ proc recycle {item_ref} {
 		set_particlesource this 6 0
 
 		//when stored in storage - pickup
-		if {[get_instore $item_ref]} {
-			pickup_from_store $item_ref
+		if {[get_instore $stored_dummy]} {
+			pickup_from_store $stored_dummy
 		}
 		//drop item when in inventory
-		if {[inv_find_obj this $item_ref] != -1 || [get_instore $item_ref]} {
+		if {[inv_find_obj this $item_ref] != -1 || [get_instore $stored_dummy]} {
 			tasklist_add this "play_anim [putdown_anim]"
 			tasklist_add this "beamto_world $item_ref [random 6.282]"
 		}
@@ -54,6 +60,7 @@ proc recycle {item_ref} {
 		tasklist_add this "recycle_intern $item_ref"
 		return 1
 	} else {
+		log "[get_objname this]: no recycle materials found"
 		tasklist_add this "rotate_tofront"
 		tasklist_add this "play_anim dontknow"
 		return 0
@@ -63,6 +70,8 @@ proc recycle {item_ref} {
 //should only be called by tasklist
 proc recycle_intern {item_ref} {
 	if {![obj_valid $item_ref] || [is_contained $item_ref] || [get_lock $item_ref]} {
+		log "[get_objname this]: recycle item is locked"
+		rotate_tofront
 		play_anim dontknow
 		return 0
 	}
@@ -138,6 +147,7 @@ proc recycle_intern {item_ref} {
 			}
 		}
 	}
+	log "[get_objname this]: item recycled, $items_generated materials generated"
 	
 	//if no item was generated - play animation
 	if {$items_generated < 1} {

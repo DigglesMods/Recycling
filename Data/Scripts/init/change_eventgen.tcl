@@ -18,7 +18,7 @@ $after
 $put
 
 				if {$alternate} {
-					evtgen_attrib -evtid evt_task_recycle -subject1 $subpar -pos1 $pospar -cursor [lmsg "use"] -desc "[lmsg recycle]"
+					evtgen_attrib -evtid evt_task_recyclebuilding -subject1 $subpar -pos1 $pospar -cursor [lmsg "use"] -desc "[lmsg recycle]"
 					return "use"
 				}
 
