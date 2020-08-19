@@ -1,11 +1,12 @@
 $start
 $before
 
-		method prod_item_tools {item} {
+	method destroy {} {
 $put
 
-		method recycle_building {user} {
-			tasklist_add $user "recycle [get_ref this]"
-		}
+	method recycle_building {user} {
+		tasklist_add $user "recycle [get_ref this]"
+	}
+
 
 $end
