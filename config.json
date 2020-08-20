@@ -20,7 +20,7 @@
 		{
 			"id": "CHANCE",
 			"type": "int",
-			"default": 75,
+			"default": 60,
 			"min": 0,
 			"max": 100,
 			"name" :  {
@@ -30,6 +30,19 @@
 			"description" : {
 				"en" : "Chance (0-100%) for any material of being recycled",
 				"de" : "Wahrscheinlichkeit (0-100%) für jedes Material recycelt zu werden"
+			}
+		},
+		{
+			"id" : "EXP_INFLUENCE",
+			"type" : "bool",
+			"default" : true,
+			"name" :  {
+				"en" : "Experience Influence",
+				"de" : "Erfahrungseinfluss"
+			},
+			"description" : {
+				"en" : "Experience is taken into account when recycling",
+				"de" : "Erfahrung wird beim Recyceln berücksichtigt"
 			}
 		},
 		{

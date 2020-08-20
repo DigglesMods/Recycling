@@ -100,6 +100,11 @@ proc recycle_intern {item_ref} {
 	//get materials
 	set materials [get_materials $item_ref]
 	
+	//items which are influenced by experience
+	set wood_items {Pilzstamm Pilzhut}
+	set stone_items {Stein Kristallerz Kristall}
+	set metal_items {Eisenerz Eisen Golderz Gold}
+	
 	//do recycling
 	set items_generated 0
 	if {$materials != {}} {
@@ -130,8 +135,12 @@ proc recycle_intern {item_ref} {
 		
 		//drop materials
 		foreach item_class $materials {
+			//calculate chance
+			set chance $print:CHANCE
+			//replacement comment for optional exp influence
+			
 			//get a material when whitelisted or (when not blacklisted with a chance) 
-			if {[lsearch $whitelist $item_class] > -1 || ([lsearch $blacklist $item_class] == -1 && [random 100] < $print:CHANCE)} {
+			if {[lsearch $whitelist $item_class] > -1 || ([lsearch $blacklist $item_class] == -1 && [random 100] < $chance)} {
 				set replace_class $item_class
 				//replace item class when defined
 				foreach replacement $replacements {
@@ -171,6 +180,20 @@ $with
 		{Gold Golderz}
 		{Kristall Krisallerz}
 	}
+$end
+
+$ifend
+
+
+$if:EXP_INFLUENCE
+
+$start
+$replace
+			//replacement comment for optional exp influence
+$with
+			if {[lsearch $wood_items $item_class] > -1} { set chance [expr {([get_attrib this exp_Holz] * 100) + $chance}] }
+			if {[lsearch $stone_items $item_class] > -1} { set chance [expr {([get_attrib this exp_Stein] * 100) + $chance}] }
+			if {[lsearch $metal_items $item_class] > -1} { set chance [expr {([get_attrib this exp_Metall] * 100) + $chance}] }
 $end
 
 $ifend
