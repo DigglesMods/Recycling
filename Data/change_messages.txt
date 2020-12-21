@@ -12,6 +12,7 @@ it "riciclare"
 nl "recyclen"
 es "reciclar"
 pl "recykling"
+ru "recycle"
 
 
 $end
