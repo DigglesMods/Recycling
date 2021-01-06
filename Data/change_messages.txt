@@ -6,6 +6,7 @@ $put
 
 ## "recycle"
 en "recycle"
+cz "recycle"
 de "recyceln"
 fr "recycler"
 it "riciclare"
